@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.dev.vars
+.wrangler/
+.mutations/
+*.log
+.DS_Store
+# Never commit real secrets, keys, or .env files with values.
+.env
+.env.*
+!.env.example
+# Local test databases
+*.db
+*.sqlite
+*.sqlite3

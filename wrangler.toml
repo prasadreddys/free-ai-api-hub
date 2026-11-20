@@ -1,0 +1,47 @@
+# FREE AI API HUB — Wrangler configuration (Worker gateway)
+# Deploy is done by the parent with the user's browser. Do NOT run
+# `wrangler deploy` or `wrangler secret put` from this repo without approval.
+# See docs/deployment.md for the exact deploy checklist.
+
+name = "free-ai-api-hub"
+main = "workers/api/src/index.ts"
+compatibility_date = "2026-11-19"
+compatibility_flags = ["nodejs_compat"]
+
+# D1 database (created at deploy time; the id is filled in then).
+[[d1_databases]]
+binding = "DB"
+database_name = "free-ai-api-hub"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
+# KV namespace for cooldowns and config only — NEVER per-request counters.
+[[kv_namespaces]]
+binding = "KV"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+# Workers AI binding (Cloudflare provider, no API key needed).
+[ai]
+binding = "AI"
+
+# Cron triggers: one hourly (stale-key re-check + hourly rollup),
+# one daily (catalog refresh + retention prune + quota reset).
+# Free plan allows 5 cron triggers per account.
+[triggers]
+crons = ["15 * * * *", "30 2 * * *"]
+
+[vars]
+# Public, non-secret configuration only. Secrets go via `wrangler secret put`.
+APP_NAME = "free-ai-api-hub"
+# Maximum chat request body in bytes (1 MB; vision payloads capped separately).
+MAX_BODY_BYTES = "1048576"
+# Retention for usage/request logs in days (pruned by the daily cron).
+LOG_RETENTION_DAYS = "30"
+
+# Secrets (set with `wrangler secret put`, NEVER in this file):
+#   ENCRYPTION_KEY  — base64, 32 random bytes; AES-256-GCM key for provider keys.
+#                     Generate with: openssl rand -base64 32
+#   SESSION_SECRET  — random string for signing admin session tokens.
+#                     Generate with: openssl rand -base64 32
+# The admin account is NOT a secret: create it after deploy with
+# POST /api/auth/setup (email + password, min 12 chars). It stores a
+# PBKDF2 hash in D1. There is no ADMIN_PASSWORD_HASH secret.

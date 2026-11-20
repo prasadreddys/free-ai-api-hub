@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+html {
+  color-scheme: light dark;
+}
+
+body {
+  @apply bg-slate-100 text-slate-900 dark:bg-[#0a0e1a] dark:text-slate-100 antialiased;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-slate-300 dark:bg-slate-700;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Code blocks */
+pre {
+  @apply overflow-x-auto rounded-lg bg-slate-900 p-4 text-sm text-slate-100 dark:bg-black/50;
+}
+code {
+  @apply font-mono text-[0.85em];
+}

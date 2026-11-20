@@ -1,0 +1,28 @@
+{
+  "description": "FREE AI API HUB dashboard (Cloudflare Pages, React + Vite + Tailwind).",
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.0"
+  },
+  "license": "MIT",
+  "name": "@free-ai-api-hub/web",
+  "private": true,
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "type": "module",
+  "version": "0.1.0",
+  "dependencies": {
+    "@free-ai-api-hub/shared": "*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}
